@@ -210,7 +210,7 @@ ___Incorrect Options___
 
 Which of the following are recommended ways to model a Many-to-Many relationship between airlines and the cities those airlines fly between?
 
-- [ ] Embedding the airlines that fly to/from a city in each of the corresponding cities document and keeping a separate copy of the airlines documents.
+- [x] Embedding the airlines that fly to/from a city in each of the corresponding cities document and keeping a separate copy of the airlines documents.
       ![](images/m320-final-many-to-many-1.png)
 
 - [x] Referencing the airlines documents in each of the corresponding cities documents.
