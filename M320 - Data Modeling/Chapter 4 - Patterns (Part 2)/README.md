@@ -996,145 +996,117 @@ When you get the validation code, paste it in the text box below and click submi
 
 ***Enter answer here:***
 
-    5caab67a9c0aa5e39686f806
+    5caab67a9c0aa5e40786f802
     
 ***See detailed answer***
 
 To solve this problem, you had to use the Polymorphic Pattern
 
-The recruiting_source field determines the shape of each document. We can rename the program_affiliation field to become the recruiting_source field in the second and third schema, and simply add that field to the first schema.
+First, and most importantly, we create a field called format. In this field, we will put one of the strings book, ebook, or audiobook.
 
-Since the program description specified that we were able to unify the name format for all the varying document shapes into two separate fields, first_name and last_name, we should reflect that change in the third schema.
+Secondly, we need to add the field product_id to the ebook and audiobook documents.
 
-All other fields present in each schema should remain as they are, since the recruiting_source is now communicating the shape of the document to our application.
+Third, we want to unify the description across the documents. There are two ways we can do that. The first is to rename the field desc to description for the ebook and audiobook. An alternative is to make a copy of the contents of desc into description to keep some backward compatibility. Both solutions would work.
 
-The document listed in the question should look like the following once transformed:
+Finally, for the authors, we need to turn the author of the audiobook documents from a string to an array of strings. It is usually a good practice to have only one type for a field. However, you could decide that the documents can accept a string or an array of strings and let the application deal with the difference of types. For this lab, we wanted to have an array of strings.
 
-    [{
-      "_id": ObjectId("5caa9e799c0aa5e39686f803"),
-      "first_name": "Arya",
-      "last_name": "Stark",
-      "recruiting_source": "Recruiting Agency",
-      "years_experience": 3,
-      "previous_employer": "Hooli",
-      "extend_offer": "yes",
-      "engineer_level": 3,
-      "education": [{
-        "level": "BS",
-        "subject": "Computer Science"
-      }],
-      "technical": ["C++", "Python", "Java", "Golang", "MongoDB", "MySQL", "Bash/Shell"],
-      "non-technical": {
-        "languages": ["English"],
-        "other": ["fencing", "dance", "horseback riding", "management"]
-      },
-      "candidate_notes": "A fierce warrior and survivor. Will do amazingly on any team."
+Applying the modifications to the documents listed in the question, they should now look like the following:
+
+    [{{
+      "_id": ObjectId("5caa9e799c0aa5e39686f000"),
+      "format": "book",
+      "product_id": 34538756,
+      "title": "MongoDB: The Definitive Guide: Powerful and Scalable Data Storage",
+      "description": "MongoDB explained by MongoDB champions",
+      "authors": ["Shannon Bradshaw", "Eoin Brazil", "Christina Chodorow"],
+      "publisher": "O'Reilly",
+      "language": "English",
+      "pages": 514,
+      "catalogues": {
+        "isbn10": "1491954469",
+        "isbn13": "978-1491954461"
+      }
     }, {
-      "_id": ObjectId("5caa9e819c0aa5e39686f804"),
-      "first_name": "Ginevra",
-      "last_name": "Weasley",
-      "recruiting_source": "Veteran Outreach Apprenticeship",
-      "extend_offer": "yes",
-      "team_placement": "Server",
-      "start_date": ISODate("2017-01-31T00:00:00.000Z"),
-      "end_date": ISODate("2018-01-31T00:00:00.000Z"),
-      "education": "App Bootcamp",
-      "technical_skills": ["JS", "ReactJS", "NodeJS", "bash/shell", "HTML5", "CSS", "Ruby on Rails", "Python"],
-      "non-technical_skills": {
-        "languages": ["English"],
-        "other": ["Magic"]
-      },
-      "notes": "Ginny has been an amazing part of the team during the apprenticeship and we would love to extend her an offer to join us more permanently."
-    }, {
-      "_id": ObjectId("5caa9e899c0aa5e39686f805"),
-      "first_name": "Rincewind",
-      "last_name": "TheWizzard",
-      "recruiting_source": "Techsy Summer Internship ",
-      "extend_offer": "yes",
-      "team_placement": "Data Optimization",
-      "start_date": ISODate("2019-06-01T00:00:00.000Z"),
-      "end_date": ISODate("2019-08-31T00:00:00.000Z"),
-      "education": [{
-          "level": "BA Major",
-          "subject": "Philosophy"
+      "_id": ObjectId("5caa9e799c0bb5e39687f000"),
+      "product_id": 44538756,
+      "format": "ebook",
+      "title": "MongoDB: The Definitive Guide: Powerful and Scalable Data Storage",
+      "desc": "MongoDB explained by MongoDB champions",
+      "description": "MongoDB explained by MongoDB champions",
+      "authors": ["Shannon Bradshaw", "Eoin Brazil", "Christina Chodorow"],
+      "publisher": "O'Reilly",
+      "language": "English",
+      "eformats": {
+        "epub": {
+          "pages": 774
         },
-        {
-          "level": "BS Minor",
-          "subject": "Artificial Intelligence"
+        "pdf": {
+          "pages": 502
         }
-      ],
-      "skills": {
-        "technical": ["R", "Django", "JavaScript", "Matlab", "HTML5", "CSS", "Mathematica", "LaTeX", "Java", "JIRA"],
-        "languages": ["English", "Chimeran", "Vanglemesht", "Sumtri", "Black Oroogu", "High Borogravian", "beTrobi"],
-        "other": []
       },
-      "notes": "Rinecewind has great ideas, but he is a bit of a mess. We still like him a lot and would love to keep him on board."
+      "isbn10": "1491954469"
+    },{
+      "_id": ObjectId("5cbb9e799c1aa5e39686f000"),
+      "format": "audiobook",
+      "product_id": 54538756,
+      "title": "MongoDB: The Definitive Guide: Powerful and Scalable Data Storage",
+      "desc": "The complete book of MongoDB by its employees",
+      "description": "MongoDB explained by MongoDB champions",
+      "authors": ["Eoin Brazil"],
+      "narrator": "Eoin Brazil",
+      "publisher": "O'Reilly",
+      "language": "English",
+      "length_minutes": 1200
     }]
 
 And the corresponding schema that you verified with the validator would look like this:
 
     [{
       "_id": "<objectId>",
-      "first_name": "<string>",
-      "last_name": "<string>",
-      "recruiting_source": "<string>",
-      "years_experience": "<int>",
-      "previous_employer": "<string>",
-      "extend_offer": "<string>",
-      "engineer_level": "<int>",
-      "education": [{
-        "level": "<string>",
-        "subject": "<string>"
-      }],
-      "technical": ["<string>"],
-      "non-technical": {
-        "languages": ["<string>"],
-        "other": ["<string>"]
-      },
-      "candidate_notes": "<string>"
+      "format": "<string>",
+      "product_id": "<int>",
+      "title": "<string>",
+      "description": "<string>",
+      "authors": ["<string>"],
+      "publisher": "<string>",
+      "language": "<string>",
+      "pages": "<int>",
+      "catalogues": {
+        "isbn10": "<string>",
+        "isbn13": "<string>"
+      }
     }, {
       "_id": "<objectId>",
-      "first_name": "<string>",
-      "last_name": "<string>",
-      "recruiting_source": "<string>",
-      "extend_offer": "<string>",
-      "team_placement": "<string>",
-      "start_date": "<date>",
-      "end_date": "<date>",
-      "education": "<string>",
-      "technical_skills": ["<string>"],
-      "non-technical_skills": {
-        "languages": ["<string>"],
-        "other": ["<string>"]
-      },
-      "notes": "<string>"
-    },
-    {
-      "_id": "<objectId>",
-      "first_name": "<string>",
-      "last_name": "<string>",
-      "recruiting_source": "<string>",
-      "extend_offer": "<string>",
-      "team_placement": "<string>",
-      "start_date": "<date>",
-      "end_date": "<date>",
-      "education": [{
-          "level": "<string>",
-          "subject": "<string>"
+      "format": "<string>",
+      "product_id": "<int>",
+      "title": "<string>",
+      "desc": "<string>",
+      "description": "<string>",
+      "authors": ["<string>"],
+      "publisher": "<string>",
+      "language": "<string>",
+      "eformats": {
+        "epub": {
+          "pages": "<int>"
         },
-        {
-          "level": "<string>",
-          "subject": "<string>"
+        "pdf": {
+          "pages": "<int>"
         }
-      ],
-      "skills": {
-        "technical": ["<string>"],
-        "languages": ["<string>"],
-        "other": ["<string>"]
       },
-      "notes": "<string>"
-    }
-    ]
+      "isbn10": "<string>"
+    },{
+      "_id": "<objectId>",
+      "format": "<string>",
+      "product_id": "<int>",
+      "title": "<string>",
+      "desc": "<string>",
+      "description": "<string>",
+      "authors": ["<string>"],
+      "narrator": "<string>",
+      "publisher": "<string>",
+      "language": "<string>",
+      "length_minutes": "<int>"
+    }]
 
 ## 4.6 Other Patterns
 
