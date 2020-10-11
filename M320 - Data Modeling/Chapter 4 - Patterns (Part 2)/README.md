@@ -940,55 +940,55 @@ To complete this task, complete the following steps:
 
 - Modify the following schemas to incorporate the changes stated above:
         
-     [{
-      "_id": "<objectId>",
-      "product_id": "<int>",
-      "title": "<string>",
-      "description": "<string>",
-      "authors": ["<string>"],
-      "publisher": "<string>",
-      "language": "<string>",
-      "pages": "<int>",
-      "catalogues": {
-        "isbn10": "<string>",
-        "isbn13": "<string>"
-      }
-    }, {
-      "_id": "<objectId>",
-      "title": "<string>",
-      "desc": "<string>",
-      "authors": ["<string>"],
-      "publisher": "<string>",
-      "language": "<string>",
-      "eformats": {
-        "epub": {
-          "pages": "<int>"
-        },
-        "pdf": {
-          "pages": "<int>"
-        }
-      },
-      "isbn10": "<string>"
-    },{
-      "_id": "<objectId>",
-      "title": "<string>",
-      "desc": "<string>",
-      "author": "<string>",
-      "narrator": "<string>",
-      "publisher": "<string>",
-      "language": "<string>",
-      "length_minutes": "<int>"
-    }]
+        [{
+          "_id": "<objectId>",
+          "product_id": "<int>",
+          "title": "<string>",
+          "description": "<string>",
+          "authors": ["<string>"],
+          "publisher": "<string>",
+          "language": "<string>",
+          "pages": "<int>",
+          "catalogues": {
+            "isbn10": "<string>",
+            "isbn13": "<string>"
+          }
+        }, {
+          "_id": "<objectId>",
+          "title": "<string>",
+          "desc": "<string>",
+          "authors": ["<string>"],
+          "publisher": "<string>",
+          "language": "<string>",
+          "eformats": {
+            "epub": {
+              "pages": "<int>"
+            },
+            "pdf": {
+              "pages": "<int>"
+            }
+          },
+          "isbn10": "<string>"
+        },{
+          "_id": "<objectId>",
+          "title": "<string>",
+          "desc": "<string>",
+          "author": "<string>",
+          "narrator": "<string>",
+          "publisher": "<string>",
+          "language": "<string>",
+          "length_minutes": "<int>"
+        }]
 
 - Save the updated schemas to a file named pattern_polymorphic.json, with each schema definition separated by a comma and the full solution enclosed in array brackets. Ensure the three schemas are in the following order: book, ebook, and audiobook.
 
 - Validate your answer on Windows by running in the CMD shell:
 
-    validate_m320 pattern_polymorphic --file pattern_polymorphic.json
+        validate_m320 pattern_polymorphic --file pattern_polymorphic.json
 
 - Validate your answer on MacOS and Linux by running:
 
-    ./validate_m320 pattern_polymorphic --file pattern_polymorphic.json
+        ./validate_m320 pattern_polymorphic --file pattern_polymorphic.json
  
 After running this script, you will either be given a validation code or an error message indicating what might be missing in your file.
 
